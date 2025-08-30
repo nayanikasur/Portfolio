@@ -16,9 +16,9 @@ const NavigationBar = () => {
              bg-[#FFFAEB]/[0.05] backdrop-blur-md 
              shadow-md hover:shadow-xl 
              hover:scale-105 transition-all duration-300 ease-in-out
-             font-semibold text-[#FFFAEB]/90"
+             font-semibold "
                 >
-                    Resume
+                    RESUME
                 </a>
 
 
