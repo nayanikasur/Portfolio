@@ -1,10 +1,9 @@
 import type { Metadata } from "next";
-import { Geist, Geist_Mono } from "next/font/google";
 import './globals.css'
 
 import { Stick_No_Bills } from "next/font/google";
 
-export const stickNoBills = Stick_No_Bills({
+const stickNoBills = Stick_No_Bills({
   subsets: ["latin"],
   weight: ["800"], // ExtraBold
   variable: "--font-stick",
