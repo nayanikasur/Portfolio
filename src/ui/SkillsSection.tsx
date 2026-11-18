@@ -69,7 +69,7 @@ export default function Skills() {
     return (
         <>
             <ActScreen
-                act={2}
+                act={3}
                 title="The tools I *reach* for."
                 sub="A MERN core with a designer's toolbox on the side. Twenty-odd tools, sorted by where they live in the stack."
                 toc={GROUPS.map((g) => ({ href: `#tk-${g.name.split(" ")[0].toLowerCase()}`, label: g.name }))}
@@ -104,7 +104,7 @@ export default function Skills() {
                     <h3 className="h2 m-0 font-display text-[clamp(34px,5vw,64px)] font-bold leading-none tracking-[-0.03em]">
                         The <em>kit</em>.
                     </h3>
-                    <span className="mono">3.1 – 3.{GROUPS.length} · hover a tool</span>
+                    <span className="mono">4.1 – 4.{GROUPS.length} · hover a tool</span>
                 </div>
 
                 <div className="grid gap-4 md:grid-cols-2">
@@ -119,7 +119,7 @@ export default function Skills() {
                             className="scroll-mt-24 rounded-[20px] border border-line-2 bg-white p-[clamp(20px,2.4vw,32px)]"
                         >
                             <div className="flex items-center justify-between">
-                                <span className="mono">3.{gi + 1}</span>
+                                <span className="mono">4.{gi + 1}</span>
                                 <i className="h-2.5 w-2.5 rounded-full" style={{ background: g.color }} />
                             </div>
                             <h4 className="mb-5 mt-2 font-display text-[clamp(26px,2.6vw,36px)] font-bold tracking-[-0.03em]">

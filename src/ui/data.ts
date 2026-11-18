@@ -16,8 +16,9 @@ export type Act = {
 
 export const ACTS: Act[] = [
   { id: "about", num: "01", label: "About", ac: "#ef5533", ai: "#1d0b04", ah: "#ffd84d" },
-  { id: "experience", num: "02", label: "Experience", ac: "#2f5bff", ai: "#ffffff", ah: "#ffd84d" },
-  { id: "toolkit", num: "03", label: "Toolkit", ac: "#1bc47d", ai: "#05170e", ah: "#ffffff" },
+  { id: "work", num: "02", label: "Work", ac: "#ee46d3", ai: "#1f0619", ah: "#ffe66d" },
+  { id: "experience", num: "03", label: "Experience", ac: "#2f5bff", ai: "#ffffff", ah: "#ffd84d" },
+  { id: "toolkit", num: "04", label: "Toolkit", ac: "#1bc47d", ai: "#05170e", ah: "#ffffff" },
 ];
 
 export const NAV = [

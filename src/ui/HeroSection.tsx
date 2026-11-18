@@ -167,7 +167,7 @@ const HeroSection = () => {
                 </motion.p>
 
                 <motion.div {...reveal(0.45)} className="mt-8 flex flex-wrap justify-center gap-3">
-                    <a href="#experience" className="pill-btn">
+                    <a href="#work" className="pill-btn">
                         See the work ↓
                     </a>
                     <a href={RESUME} download className="ghost-btn">

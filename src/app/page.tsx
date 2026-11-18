@@ -7,6 +7,7 @@ import Contact from "@/ui/ContactMe";
 import ExperienceSection from "@/ui/ExperienceSection";
 import HeroSection from "@/ui/HeroSection";
 import NavigationBar from "@/ui/NavigationBar";
+import ProjectsSection from "@/ui/ProjectsSection";
 import SkillsSection from "@/ui/SkillsSection";
 import Ticker from "@/ui/Ticker";
 
@@ -34,6 +35,7 @@ export default function Home() {
         <HeroSection />
         <Ticker />
         <AboutSection />
+        <ProjectsSection />
         <ExperienceSection />
         <SkillsSection />
       </main>

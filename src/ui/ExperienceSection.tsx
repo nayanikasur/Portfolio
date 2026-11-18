@@ -94,12 +94,12 @@ const ExperienceSection = () => {
     return (
         <>
             <ActScreen
-                act={1}
+                act={2}
                 title="Four teams. One habit: *shipping*."
                 sub="From an internship writing SDKs to building AI-powered products end to end. Here's where I've been and what I left behind."
                 toc={[
-                    { href: "#work", label: "Where I've worked" },
-                    { href: "#toolkit", label: "What I used" },
+                    { href: "#jobs", label: "Where I've worked" },
+                    { href: "#toolkit", label: "What I use" },
                 ]}
                 stickers={
                     <>
@@ -125,12 +125,12 @@ const ExperienceSection = () => {
                 }
             />
 
-            <section id="work" className="px-gx py-[clamp(80px,10vw,140px)]">
+            <section id="jobs" className="px-gx py-[clamp(80px,10vw,140px)]">
                 <div className="mb-[clamp(24px,3.4vw,48px)] flex flex-wrap items-end justify-between gap-5">
                     <h3 className="h2 m-0 font-display text-[clamp(34px,5vw,64px)] font-bold leading-none tracking-[-0.03em]">
                         Where I&apos;ve <em>worked</em>.
                     </h3>
-                    <span className="mono">2.1 · {experiences.length} roles · 2023 → now</span>
+                    <span className="mono">3.1 · {experiences.length} roles · 2023 → now</span>
                 </div>
 
                 <div className="flex flex-col gap-6">
