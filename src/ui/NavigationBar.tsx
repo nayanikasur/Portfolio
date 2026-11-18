@@ -1,102 +1,127 @@
-import { useState } from "react";
-import { Menu, X } from "lucide-react"; // hamburger + close icons
+"use client";
 
-const NavigationBar = () => {
+import { useEffect, useState } from "react";
+import { Menu, X } from "lucide-react";
+import { ACTS, EMAIL, NAV } from "./data";
+
+type Props = { onOpenPalette: () => void };
+
+const NavigationBar = ({ onOpenPalette }: Props) => {
     const [isOpen, setIsOpen] = useState(false);
+    const [active, setActive] = useState("");
+
+    useEffect(() => {
+        const io = new IntersectionObserver(
+            (entries) => entries.forEach((e) => e.isIntersecting && setActive(e.target.id)),
+            { rootMargin: "-45% 0px -50% 0px" }
+        );
+        ["hero", ...NAV.map((n) => n.id)].forEach((id) => {
+            const el = document.getElementById(id);
+            if (el) io.observe(el);
+        });
+        return () => io.disconnect();
+    }, []);
+
+    const act = ACTS.find((a) => a.id === active);
 
     return (
-        <nav className="p-2 fixed top-0 left-0 w-full z-50">
-            <div className="flex justify-between items-center">
-                {/* Resume Button with blur */}
+        <>
+            <nav
+                className={`px-gx sticky top-0 z-50 flex items-center gap-7 border-b py-3.5 backdrop-blur-[14px] transition-colors duration-300 ${active === "contact"
+                    ? "border-on-dark-faint bg-dark/80 text-on-dark [&_.pill-btn]:bg-white [&_.pill-btn]:text-ink [&_kbd]:border-on-dark-faint [&_kbd]:bg-dark-2 [&_.logo-box]:bg-white [&_.logo-box]:text-ink"
+                    : "border-line bg-white/80"
+                    }`}
+            >
                 <a
-                    href="/Nayanika-Sur-Resume.pdf"
-                    download
-                    className="rounded-full h-20 w-20 flex items-center justify-center
-             border-[3px] border-[#FFFAEB]/70 
-             bg-[#FFFAEB]/[0.05] backdrop-blur-md 
-             shadow-md hover:shadow-xl 
-             hover:scale-105 transition-all duration-300 ease-in-out
-             font-semibold "
+                    href="#hero"
+                    className="sr-only focus:not-sr-only focus:absolute focus:left-4 focus:top-3 focus:rounded-full focus:bg-ink focus:px-3 focus:py-1.5 focus:text-white"
                 >
-                    RESUME
+                    Skip to content
                 </a>
 
+                {/* Logo */}
+                <a href="#hero" className="flex flex-none items-center gap-2.5" aria-label="Nayanika Sur, home">
+                    <span className="logo-box flex h-8 w-8 items-center justify-center rounded-[10px] bg-ink font-display text-sm font-extrabold tracking-tight text-white transition-transform duration-500 [transition-timing-function:var(--spring)] hover:rotate-[-8deg] hover:scale-110">
+                        N<span className="text-orange">.</span>
+                    </span>
+                    <span className="hidden font-display text-[15px] font-bold uppercase tracking-tight sm:inline">
+                        Nayanika&apos;s folio
+                    </span>
+                </a>
 
-                {/* Desktop Nav Links */}
-                <ul className="hidden sm:flex justify-end gap-10 py-4 px-6 font-semibold text-lg bg-[#FFFAEB]/[0.05] backdrop-blur-md rounded-full shadow-sm">
-                    <li>
-                        <a href="#about" className="hover:text-[#767676] transition-colors">
-                            About
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#experience" className="hover:text-[#767676] transition-colors">
-                            Experience
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#skills" className="hover:text-[#767676] transition-colors">
-                            Skills
-                        </a>
-                    </li>
-                    <li>
-                        <a href="#contact" className="hover:text-[#767676] transition-colors">
-                            Contact
-                        </a>
-                    </li>
+                {/* Links */}
+                <ul className="ml-2 hidden gap-[22px] text-sm font-medium md:flex">
+                    {NAV.map((n) => (
+                        <li key={n.id}>
+                            <a
+                                href={`#${n.id}`}
+                                className={`whitespace-nowrap transition-opacity duration-200 hover:opacity-100 ${active === n.id ? "opacity-100" : "opacity-60"
+                                    }`}
+                            >
+                                {n.label}
+                            </a>
+                        </li>
+                    ))}
                 </ul>
 
-                {/* Mobile Hamburger */}
-                <button
-                    onClick={() => setIsOpen(!isOpen)}
-                    className="sm:hidden p-3 bg-[#FFFAEB]/[0.05] backdrop-blur-md rounded-full shadow-sm"
-                >
-                    {isOpen ? <X size={24} /> : <Menu size={24} />}
-                </button>
-            </div>
+                <div className="ml-auto flex items-center gap-4">
+                    <button
+                        onClick={onOpenPalette}
+                        className="hidden items-center gap-2 text-sm font-medium opacity-60 transition-opacity hover:opacity-100 sm:flex"
+                        aria-label="Open command menu"
+                    >
+                        <kbd className="rounded-md border border-line-2 bg-bg-2 px-1.5 py-0.5 font-mono text-[11px]">⌘K</kbd>
+                        Jump
+                    </button>
+                    <a href={`mailto:${EMAIL}`} className="pill-btn hidden sm:inline-flex">
+                        Let&apos;s build
+                    </a>
+                    <button
+                        onClick={() => setIsOpen(!isOpen)}
+                        className="rounded-full border border-line-2 p-2 md:hidden"
+                        aria-label={isOpen ? "Close menu" : "Open menu"}
+                        aria-expanded={isOpen}
+                    >
+                        {isOpen ? <X size={18} /> : <Menu size={18} />}
+                    </button>
+                </div>
+            </nav>
 
-            {/* Mobile Dropdown */}
+            {/* Mobile menu */}
             {isOpen && (
-                <ul className="sm:hidden mt-4 flex flex-col items-start gap-4 py-4 px-6 font-semibold text-lg bg-[#FFFAEB]/[0.9] backdrop-blur-md rounded-xl shadow-md">
-                    <li>
-                        <a
-                            href="#about"
-                            onClick={() => setIsOpen(false)}
-                            className="hover:text-[#767676] transition-colors"
-                        >
-                            About
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="#experience"
-                            onClick={() => setIsOpen(false)}
-                            className="hover:text-[#767676] transition-colors"
-                        >
-                            Experience
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="#skills"
-                            onClick={() => setIsOpen(false)}
-                            className="hover:text-[#767676] transition-colors"
-                        >
-                            Skills
-                        </a>
-                    </li>
-                    <li>
-                        <a
-                            href="#contact"
-                            onClick={() => setIsOpen(false)}
-                            className="hover:text-[#767676] transition-colors"
-                        >
-                            Contact
-                        </a>
-                    </li>
-                </ul>
+                <div className="fixed inset-x-0 top-[61px] z-50 border-b border-line bg-white px-5 pb-5 md:hidden">
+                    <ul className="flex flex-col">
+                        {NAV.map((n, i) => (
+                            <li key={n.id}>
+                                <a
+                                    href={`#${n.id}`}
+                                    onClick={() => setIsOpen(false)}
+                                    className="flex items-baseline gap-3 border-b border-line py-3"
+                                >
+                                    <span className="mono">{String(i + 1).padStart(2, "0")}</span>
+                                    <span className="font-display text-3xl font-extrabold tracking-[-0.04em]">{n.label}</span>
+                                </a>
+                            </li>
+                        ))}
+                    </ul>
+                    <a href={`mailto:${EMAIL}`} className="pill-btn mt-4 w-full justify-center">
+                        Let&apos;s build
+                    </a>
+                </div>
             )}
-        </nav>
+
+            {/* Floating act tag (bottom-left) */}
+            <div
+                aria-hidden="true"
+                className={`fixed bottom-[clamp(14px,2vw,26px)] left-[clamp(14px,2vw,28px)] z-40 flex h-9 items-center gap-2 rounded-full pl-3 pr-4 shadow-[0_10px_24px_-12px_rgba(0,0,0,.5)] transition-all duration-300 ${act ? "scale-100 opacity-100" : "pointer-events-none scale-90 opacity-0"
+                    }`}
+                style={{ background: act?.ac ?? "#111", color: act?.ai ?? "#fff" }}
+            >
+                <i className="h-2 w-2 rounded-full" style={{ background: act?.ah ?? "#ffd84d" }} />
+                <span className="text-[11px] opacity-70">Act {act?.num}</span>
+                <b className="font-display text-sm font-bold tracking-tight">{act?.label}</b>
+            </div>
+        </>
     );
 };
 

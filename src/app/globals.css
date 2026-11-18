@@ -1,1 +1,338 @@
 @import "tailwindcss";
+
+@theme {
+  --font-display: var(--nf-display), "Inter", -apple-system, Helvetica, Arial, sans-serif;
+  --font-sans: var(--nf-sans), -apple-system, Helvetica, Arial, sans-serif;
+  --font-serif: var(--nf-serif), Georgia, serif;
+  --font-mono: var(--nf-mono), ui-monospace, Menlo, monospace;
+
+  --color-bg: #ffffff;
+  --color-bg-2: #f5f5f7;
+  --color-ink: #111111;
+  --color-ink-2: #424242;
+  --color-muted: #8a8a8a;
+  --color-line: rgb(17 17 17 / 0.1);
+  --color-line-2: rgb(17 17 17 / 0.22);
+  --color-dark: #111111;
+  --color-dark-2: #181818;
+  --color-on-dark: #ececec;
+  --color-on-dark-soft: rgb(236 236 236 / 0.6);
+  --color-on-dark-faint: rgb(236 236 236 / 0.14);
+
+  --color-orange: #ef5533;
+  --color-blue: #18a0fb;
+  --color-green: #1bc47d;
+  --color-pink: #ee46d3;
+  --color-violet: #6465ed;
+  --color-yellow: #ffc700;
+}
+
+:root {
+  --gx: clamp(20px, 7vw, 128px);
+  --ease: cubic-bezier(0.2, 0.7, 0.2, 1);
+  --spring: cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+
+html {
+  scroll-behavior: smooth;
+  scroll-padding-top: 72px;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-ink);
+  font-family: var(--font-sans);
+  font-size: 16px;
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+
+::selection {
+  background: var(--color-blue);
+  color: #fff;
+}
+
+a:focus-visible,
+button:focus-visible {
+  outline: 2px solid var(--color-blue);
+  outline-offset: 3px;
+}
+
+/* Component classes live in a layer so Tailwind utilities (e.g. `hidden sm:flex`) can override them. */
+@layer components {
+/* ---------- shared bits ---------- */
+.px-gx {
+  padding-inline: var(--gx);
+}
+
+.mono {
+  font-family: var(--font-mono);
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--color-muted);
+}
+
+.pill-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  background: var(--color-ink);
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  padding: 10px 18px;
+  border-radius: 999px;
+  transition: transform 0.3s var(--spring), background 0.2s;
+}
+.pill-btn:hover {
+  background: var(--color-orange);
+  transform: translateY(-2px);
+}
+
+.ghost-btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  border: 1.5px solid var(--color-ink);
+  font-weight: 600;
+  font-size: 14px;
+  padding: 9px 17px;
+  border-radius: 999px;
+  transition: transform 0.3s var(--spring), box-shadow 0.2s;
+}
+.ghost-btn:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 3px 3px 0 var(--color-ink);
+}
+
+.grid-bg {
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background-image: linear-gradient(to right, rgb(17 17 17 / 0.07) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(17 17 17 / 0.07) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: linear-gradient(to bottom, #000 70%, transparent);
+  -webkit-mask-image: linear-gradient(to bottom, #000 70%, transparent);
+}
+
+/* ---------- hero ---------- */
+.fc {
+  position: absolute;
+  z-index: 3;
+  pointer-events: none;
+  display: flex;
+  align-items: flex-start;
+  animation: drift var(--d, 14s) ease-in-out infinite alternate;
+}
+.fc svg {
+  width: 22px;
+  height: 22px;
+  fill: var(--c);
+  stroke: #fff;
+  stroke-width: 1.4;
+  stroke-linejoin: round;
+  filter: drop-shadow(0 1px 2px rgb(0 0 0 / 0.25));
+}
+.fc span {
+  margin: 14px 0 0 -4px;
+  background: var(--c);
+  color: #fff;
+  font: 500 12px/1 var(--font-sans);
+  padding: 5px 8px;
+  border-radius: 4px;
+  white-space: nowrap;
+}
+
+.bubble {
+  position: absolute;
+  z-index: 3;
+  display: flex;
+  gap: 10px;
+  align-items: flex-start;
+  background: #fff;
+  border: 1px solid var(--color-line);
+  border-radius: 14px;
+  padding: 10px 14px 10px 10px;
+  box-shadow: 0 10px 30px -12px rgb(0 0 0 / 0.25);
+  max-width: 280px;
+  pointer-events: none;
+}
+
+.sel-h {
+  position: absolute;
+  width: 9px;
+  height: 9px;
+  background: #fff;
+  border: 1.5px solid var(--color-blue);
+  border-radius: 2px;
+}
+
+.hero-sub em {
+  font-style: normal;
+  background: linear-gradient(transparent 60%, #ffe66d 60%);
+  padding: 0 2px;
+}
+
+/* ---------- acts ---------- */
+.act-field {
+  background: var(--ac);
+  color: var(--ai);
+}
+.act-field::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle, color-mix(in srgb, var(--ai) 12%, transparent) 1.1px, transparent 1.6px) 0 0 / 18px 18px;
+  opacity: 0.6;
+  pointer-events: none;
+}
+.act-field::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  border-radius: inherit;
+  background: radial-gradient(70% 80% at 12% 10%, rgb(255 255 255 / 0.22), transparent 60%),
+    radial-gradient(60% 70% at 95% 100%, rgb(0 0 0 / 0.18), transparent 60%);
+  pointer-events: none;
+}
+.act-num {
+  color: transparent;
+  -webkit-text-stroke: 2px color-mix(in srgb, var(--ai) 38%, transparent);
+}
+.act-k {
+  background: var(--ai);
+  color: var(--ac);
+}
+.act-k i {
+  background: var(--ah);
+  animation: kpulse 2s ease-out infinite;
+}
+.act-t em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  color: var(--ah);
+  font-size: 1.08em;
+}
+.act-toc a {
+  border: 1.5px solid var(--ai);
+  background: color-mix(in srgb, var(--ac) 80%, #fff);
+  box-shadow: 3px 3px 0 var(--ai);
+  transition: transform 0.25s var(--spring), box-shadow 0.25s var(--spring);
+}
+.act-toc a:hover {
+  transform: translate(-2px, -2px);
+  box-shadow: 5px 5px 0 var(--ai);
+}
+.act-toc a i {
+  background: var(--ai);
+  color: var(--ac);
+}
+
+/* section headings outside acts */
+.h2 em,
+.big em {
+  font-family: var(--font-serif);
+  font-style: italic;
+  font-weight: 400;
+  letter-spacing: -0.02em;
+}
+
+/* ---------- footer ---------- */
+.foot-grid::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background-image: linear-gradient(to right, rgb(255 255 255 / 0.05) 1px, transparent 1px),
+    linear-gradient(to bottom, rgb(255 255 255 / 0.05) 1px, transparent 1px);
+  background-size: 60px 60px;
+  mask-image: linear-gradient(to bottom, #000, transparent 85%);
+  -webkit-mask-image: linear-gradient(to bottom, #000, transparent 85%);
+  pointer-events: none;
+}
+.outline-word {
+  color: transparent;
+  -webkit-text-stroke: 1.5px rgb(236 236 236 / 0.5);
+}
+
+} /* end @layer components */
+
+/* ---------- animations ---------- */
+@keyframes drift {
+  0% {
+    transform: translate(0);
+  }
+  33% {
+    transform: translate(18px, -12px);
+  }
+  66% {
+    transform: translate(-10px, 14px);
+  }
+  100% {
+    transform: translate(12px, 6px);
+  }
+}
+@keyframes bob {
+  50% {
+    transform: translateY(-8px);
+  }
+}
+@keyframes tick {
+  to {
+    transform: translateX(-50%);
+  }
+}
+@keyframes kpulse {
+  0% {
+    box-shadow: 0 0 0 0 rgb(255 255 255 / 0.55);
+  }
+  100% {
+    box-shadow: 0 0 0 10px rgb(255 255 255 / 0);
+  }
+}
+@keyframes cue {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 1;
+  }
+  50% {
+    transform: translateY(6px);
+    opacity: 0.4;
+  }
+}
+
+.animate-bob {
+  animation: bob 6s ease-in-out infinite;
+}
+.animate-bob-rev {
+  animation: bob 7s ease-in-out infinite reverse;
+}
+.ticker-track {
+  animation: tick 40s linear infinite;
+}
+.ticker:hover .ticker-track {
+  animation-play-state: paused;
+}
+.animate-cue {
+  animation: cue 1.8s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  html {
+    scroll-behavior: auto;
+  }
+  .fc,
+  .animate-bob,
+  .animate-bob-rev,
+  .ticker-track,
+  .animate-cue,
+  .act-k i {
+    animation: none;
+  }
+}

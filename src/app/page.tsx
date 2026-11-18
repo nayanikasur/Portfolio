@@ -1,32 +1,44 @@
 "use client";
+
+import { useEffect, useState } from "react";
 import AboutSection from "@/ui/AboutSection";
+import CommandPalette from "@/ui/CommandPalette";
 import Contact from "@/ui/ContactMe";
 import ExperienceSection from "@/ui/ExperienceSection";
 import HeroSection from "@/ui/HeroSection";
 import NavigationBar from "@/ui/NavigationBar";
 import SkillsSection from "@/ui/SkillsSection";
+import Ticker from "@/ui/Ticker";
 
 export default function Home() {
+  const [paletteOpen, setPaletteOpen] = useState(false);
+
+  // ⌘K / Ctrl+K toggles the command menu.
+  useEffect(() => {
+    const onKey = (e: KeyboardEvent) => {
+      if ((e.metaKey || e.ctrlKey) && e.key.toLowerCase() === "k") {
+        e.preventDefault();
+        setPaletteOpen((v) => !v);
+      }
+    };
+    window.addEventListener("keydown", onKey);
+    return () => window.removeEventListener("keydown", onKey);
+  }, []);
+
+  const openPalette = () => setPaletteOpen(true);
+
   return (
-    <div className="bg-[#FFFAEB] text-[#3F3D3A] min-h-screen">
-      {/* 🔹 Navigation Bar */}
-      <NavigationBar />
-
-      {/* 🔹 Hero Section */}
-      <HeroSection />
-
-
-      {/* 🔹 About Section */}
-      <AboutSection />
-
-      {/* 🔹 Experience Section */}
-      <ExperienceSection />
-
-      {/* 🔹 Skills Section */}
-      <SkillsSection />
-
-      {/* 🔹 Contact Section */}
-      <Contact />
-    </div>
+    <>
+      <NavigationBar onOpenPalette={openPalette} />
+      <main>
+        <HeroSection />
+        <Ticker />
+        <AboutSection />
+        <ExperienceSection />
+        <SkillsSection />
+      </main>
+      <Contact onOpenPalette={openPalette} />
+      <CommandPalette open={paletteOpen} onClose={() => setPaletteOpen(false)} />
+    </>
   );
 }
