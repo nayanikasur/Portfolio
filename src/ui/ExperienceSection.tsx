@@ -3,6 +3,7 @@
 import { motion } from "framer-motion";
 import { Bug, Box, Cloud, Code, Code2, Database, KeyRound, Layers, Plug, Search, Shield, Users, Workflow, Zap } from "lucide-react";
 import ActScreen, { Sticker } from "./ActScreen";
+import StackCards from "./StackCards";
 
 type Experience = {
     title: string;
@@ -88,7 +89,6 @@ const experiences: Experience[] = [
     },
 ];
 
-const STICKY_TOPS = ["top-[84px]", "top-[100px]", "top-[116px]", "top-[132px]"];
 
 const ExperienceSection = () => {
     return (
@@ -133,7 +133,7 @@ const ExperienceSection = () => {
                     <span className="mono">3.1 · {experiences.length} roles · 2023 → now</span>
                 </div>
 
-                <div className="flex flex-col gap-6">
+                <StackCards>
                     {experiences.map((exp, i) => (
                         <motion.article
                             key={exp.company}
@@ -141,7 +141,7 @@ const ExperienceSection = () => {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, amount: 0.15 }}
                             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                            className={`relative overflow-hidden rounded-[20px] border border-on-dark-faint bg-dark-2 text-on-dark shadow-[0_-20px_60px_-30px_rgba(0,0,0,.8)] lg:sticky ${STICKY_TOPS[i]}`}
+                            className="relative overflow-hidden rounded-[20px] border border-on-dark-faint bg-dark-2 text-on-dark shadow-[0_-20px_60px_-30px_rgba(0,0,0,.8)]"
                         >
                             <div
                                 className={`grid items-start gap-[clamp(20px,3.4vw,48px)] p-[clamp(22px,3vw,40px)] ${exp.achievements.length ? "lg:grid-cols-[1fr_1.15fr]" : ""
@@ -200,7 +200,7 @@ const ExperienceSection = () => {
                             </div>
                         </motion.article>
                     ))}
-                </div>
+                </StackCards>
             </section>
         </>
     );

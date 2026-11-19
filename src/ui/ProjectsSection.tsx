@@ -3,6 +3,7 @@
 import Image from "next/image";
 import { motion } from "framer-motion";
 import ActScreen, { Sticker } from "./ActScreen";
+import StackCards from "./StackCards";
 
 type Project = {
     id: string;
@@ -57,7 +58,6 @@ const PROJECTS: Project[] = [
     },
 ];
 
-const STICKY_TOPS = ["lg:top-[84px]", "lg:top-[100px]", "lg:top-[116px]"];
 
 export default function ProjectsSection() {
     return (
@@ -108,7 +108,7 @@ export default function ProjectsSection() {
                     <span className="mono">2.1 · {PROJECTS.length} live projects · click to visit</span>
                 </div>
 
-                <div className="flex flex-col gap-6">
+                <StackCards>
                     {PROJECTS.map((p, i) => (
                         <motion.article
                             key={p.id}
@@ -117,7 +117,7 @@ export default function ProjectsSection() {
                             whileInView={{ opacity: 1, y: 0 }}
                             viewport={{ once: true, amount: 0.15 }}
                             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-                            className={`relative scroll-mt-24 overflow-hidden rounded-[20px] border border-on-dark-faint bg-dark-2 text-on-dark shadow-[0_-20px_60px_-30px_rgba(0,0,0,.8)] lg:sticky ${STICKY_TOPS[i]}`}
+                            className="relative scroll-mt-24 overflow-hidden rounded-[20px] border border-on-dark-faint bg-dark-2 text-on-dark shadow-[0_-20px_60px_-30px_rgba(0,0,0,.8)]"
                         >
                             <div className="grid items-center gap-[clamp(20px,3.4vw,48px)] p-[clamp(22px,3vw,40px)] lg:grid-cols-[1fr_1.15fr]">
                                 {/* Copy */}
@@ -198,7 +198,7 @@ export default function ProjectsSection() {
                             </div>
                         </motion.article>
                     ))}
-                </div>
+                </StackCards>
             </section>
         </>
     );

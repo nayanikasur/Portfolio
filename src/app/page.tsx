@@ -9,6 +9,7 @@ import HeroSection from "@/ui/HeroSection";
 import NavigationBar from "@/ui/NavigationBar";
 import ProjectsSection from "@/ui/ProjectsSection";
 import SkillsSection from "@/ui/SkillsSection";
+import SmoothScroll from "@/ui/SmoothScroll";
 import Ticker from "@/ui/Ticker";
 
 export default function Home() {
@@ -30,6 +31,7 @@ export default function Home() {
 
   return (
     <>
+      <SmoothScroll />
       <NavigationBar onOpenPalette={openPalette} />
       <main>
         <HeroSection />

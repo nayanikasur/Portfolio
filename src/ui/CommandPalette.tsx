@@ -2,6 +2,7 @@
 
 import { useEffect, useMemo, useRef, useState } from "react";
 import { EMAIL, GITHUB, LINKEDIN, NAV, RESUME } from "./data";
+import { scrollToId } from "./SmoothScroll";
 
 type Item = { label: string; hint: string; run: () => void };
 
@@ -13,7 +14,7 @@ export default function CommandPalette({ open, onClose }: Props) {
     const inputRef = useRef<HTMLInputElement>(null);
 
     const items: Item[] = useMemo(() => {
-        const go = (id: string) => () => document.getElementById(id)?.scrollIntoView({ behavior: "smooth" });
+        const go = (id: string) => () => scrollToId(id);
         const open = (url: string) => () => window.open(url, "_blank", "noopener");
         return [
             { label: "Top of the page", hint: "Go", run: go("hero") },
@@ -57,6 +58,7 @@ export default function CommandPalette({ open, onClose }: Props) {
             role="dialog"
             aria-modal="true"
             aria-label="Command menu"
+            data-lenis-prevent
         >
             <div
                 className="w-full max-w-lg overflow-hidden rounded-2xl border border-line bg-white shadow-[0_30px_80px_-20px_rgba(0,0,0,.45)]"

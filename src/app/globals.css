@@ -49,6 +49,21 @@ body {
   overflow-x: hidden;
 }
 
+/* Lenis smooth scroll: it drives scrolling itself, so native smooth-scroll must be off */
+html.lenis,
+html.lenis body {
+  height: auto;
+}
+.lenis:not(.lenis-autoToggle).lenis-stopped {
+  overflow: clip;
+}
+.lenis.lenis-smooth {
+  scroll-behavior: auto !important;
+}
+.lenis.lenis-smooth [data-lenis-prevent] {
+  overscroll-behavior: contain;
+}
+
 ::selection {
   background: var(--color-blue);
   color: #fff;
